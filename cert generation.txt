@@ -1,0 +1,43 @@
+###Step 1: Install OpenSSL
+##Ensure OpenSSL is installed on your Debian machines. You can install it using:
+
+sudo apt-get update
+sudo apt-get install openssl
+
+###Step 2: Generate the CA Certificate and Key
+
+##Create a directory for the CA:
+
+mkdir -p ~/ca
+cd ~/ca
+
+##Generate the CA private key:
+
+openssl genpkey -algorithm RSA -out ca.key
+
+##Generate the CA certificate:
+
+openssl req -x509 -new -key ca.key -sha256 -subj "/C=US/ST=State/L=City/O=Organization/OU=OrgUnit/CN=ca.example.com" -out ca.crt -days 3650
+
+
+###Step 3: Generate Certificates for Each Node
+###For each node, you'll generate a certificate signing request (CSR) and sign it with the CA certificate.
+
+##Create a directory for the node certificates:
+
+mkdir -p ~/certs
+cd ~/certs
+
+##Generate the private key for the node:
+
+openssl genpkey -algorithm RSA -out node1.key
+
+##Generate the CSR for the node:
+
+openssl req -new -key node1.key -out node1.csr -subj "/C=US/ST=State/L=City/O=Organization/OU=OrgUnit/CN=node1.example.com"
+
+##Generate the node certificate signed by the CA:
+
+openssl x509 -req -in node1.csr -CA ~/ca/ca.crt -CAkey ~/ca/ca.key -CAcreateserial -out node1.crt -days 365 -sha256
+
+##Repeat these steps for each node, replacing node1 with the appropriate node identifier (e.g., node2, node3, etc.).
