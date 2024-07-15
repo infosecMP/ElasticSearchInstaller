@@ -34,7 +34,7 @@ openssl genpkey -algorithm RSA -out node1.key
 
 ##Generate the CSR for the node:
 
-openssl req -new -key node1.key -out node1.csr -subj "/C=US/ST=State/L=City/O=Organization/OU=OrgUnit/CN=node1.example.com"
+openssl req -new -key ElasticAutomationTest1.key -out node1.csr -subj "/C=BG/ST=Sofia/L=Sofia/O=Arrise/OU=CyberSecurity/CN=ElasticAutomationTest1.elasticsiem.local"
 
 ##Generate the node certificate signed by the CA:
 

@@ -50,13 +50,19 @@ def configure_elasticsearch(node_name, node_roles, network_host, seed_hosts, ini
         "network.host": network_host,
         "discovery.seed_hosts": seed_hosts,
         "cluster.initial_master_nodes": initial_master_nodes,
-        "bootstrap.memory_lock": True,
+        "bootstrap.memory_lock": False,
         "path.data": data_path,
         "path.logs": logs_path,
         "xpack.security.transport.ssl.enabled": True,
         "xpack.security.transport.ssl.verification_mode": "certificate",
-        "xpack.security.transport.ssl.keystore.path": "/etc/elasticsearch/elastic-certificates.p12",
-        "xpack.security.transport.ssl.truststore.path": "/etc/elasticsearch/elastic-certificates.p12"
+        "xpack.security.transport.ssl.key": "/etc/elasticsearch/certs/ElasticAutomationTest1.key",
+        "xpack.security.transport.ssl.certificate": "/etc/elasticsearch/certs/ElasticAutomationTest1.crt",
+        "xpack.security.transport.ssl.certificate_authorities": "/etc/elasticsearch/certs/ca.crt",
+        "xpack.security.http.ssl.enabled": True,
+        "xpack.security.http.ssl.key": "/etc/elasticsearch/certs/ElasticAutomationTest1.key",
+        "xpack.security.http.ssl.certificate": "/etc/elasticsearch/certs/ElasticAutomationTest1.crt",
+        "xpack.security.http.ssl.certificate_authorities": "/etc/elasticsearch/certs/ca.crt",
+        "xpack.security.enrollment.enabled": True
     }
     
     with open(config_path, 'w') as f:
